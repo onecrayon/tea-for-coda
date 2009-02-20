@@ -1,7 +1,7 @@
 # Usage: python setup.py py2app
 # Dev:   python setup.py py2app -A
 # Built plugin will show up in ./dist directory
-# Install in the standard Sugars directory and relaunch Espresso to run
+# Install in the standard plugin directory and relaunch Coda to run
 
 from distutils.core import setup
 import py2app
