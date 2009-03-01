@@ -1,0 +1,13 @@
+First Public Release:
+- Indent New Line
+- Insert BR
+- Insert Open/Close Tag (rename to Insert Tag With Word)
+- Tidy HTML
+- Wrap Selected Lines In Tag
+- Wrap Selection In Link
+- Wrap Selection In Tag
+- Format with Em
+- Format with Strong
+
+- Arbitrary extension with Python scripts (or overriding of existing scripts) simply by placing them in the appropriate folder
+- Common action functions, much like TEA for Espresso; if I can merge these code bases at all, that'd be nice
