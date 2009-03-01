@@ -1,15 +1,17 @@
-Textmate Emulation Actions for Coda
------------------------------------
+Text Editor Actions for Coda
+----------------------------
 
-Textmate Emulation Actions (TEA) are some of my favorite actions from
-Textmate implemented as a [Coda][1] plugin. For general information,
-including download links, see the official [TEA for Coda][2] page.
+Text Editor Actions (TEA) for Coda (formerly Textmate Emulation Applescripts)
+are some of the text manipulations that I think ever editor should have,
+implemented as a [Coda][1] plugin. I originally began work on TEA because
+I was interested in Coda's all-in-one workflow but completely uninterested
+in abandoning Textmate's excellent HTML editing capabilities.
 
-If you are interested in extending or modifying the TEA for Coda plugin
-for your own use, then you've come to the right place.
+One of the benefits of the TEA for Coda plugin versus the original
+Applescripts is that you can easily extend the plugin with arbitrary actions
+of your own. All you need to know is a little bit of Python.
 
    [1]: http://panic.com/coda/
-   [2]: http://onecrayon.com/tea/coda/
 
 Extending TEA for Coda
 ======================
@@ -21,4 +23,4 @@ starting point.  For more information about extending or building on TEA
 for Coda, please see the [wiki][4].
 
    [3]: http://python.org/
-   [4]: https://github.com/onecrayon/tea-for-coda/wikis
+   [4]: http://wiki.github.com/onecrayon/tea-for-coda/
