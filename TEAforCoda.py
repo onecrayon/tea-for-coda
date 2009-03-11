@@ -26,7 +26,7 @@ class TEAforCoda(NSObject):
         # Set object's internal variables
         self.controller = inController
         # Setup the menu items
-        setup_actions()
+        setup_actions(self.controller)
         
         # Add the Resources folder to the path
         sys.path.append(thisBundle.bundlePath() + '/Contents/Resources/')
@@ -37,6 +37,14 @@ class TEAforCoda(NSObject):
         '''Required method; returns the name of the plugin'''
         return 'TEA for Coda'
     
-    def act(self, caller):
+    def act(self, target):
         '''Runs the selected action'''
         pass
+    
+    def setup_actions(self):
+        '''
+        Searches through standard folders for actions and populates the
+        menus with them using default or predefined shortcuts
+        '''
+        user, default = default_locations()
+        # Walk through the directories and setup the menu items here
