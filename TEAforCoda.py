@@ -56,14 +56,14 @@ class TEAforCoda(NSObject):
         # Walk through the directories and setup the menu items here
         actions = actions_from_dir(user_modules)
         actions = actions_from_dir(default_modules, actions)
-        for path, submenu, action in actions:
+        for submenu, action in actions:
             title = action.replace('_', ' ').title()
             self.controller.registerActionWithTitle_underSubmenuWithTitle_target_selector_representedObject_keyEquivalent_pluginName_(
                 title,
                 submenu,
                 self,
                 'act:',
-                [path, action],
+                [submenu, action],
                 # TODO: fill in shortcut based on preferences
                 '',
                 title

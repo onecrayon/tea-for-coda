@@ -17,19 +17,22 @@ def default_locations():
     )
     return user_modules, default_modules
 
-def load_action(target, search_path):
+def load_action(target, parent):
     '''
     Imports target TEA action file and returns it as a module
     (TEA modules are likely not, by default, in the system path)
     
     Usage: wrap_selection_in_tag = load_action('wrap_selection_in_tag')
     '''
+    user_modules, default_modules = default_locations()
     try:
         # Is the action already loaded?
         module = sys.modules[target]
     except (KeyError, ImportError):
         # Find the action (easiest way to set up the vars we need)
-        file, pathname, description = imp.find_module(target, search_path)
+        file, pathname, description = imp.find_module(
+            target, [user_modules + parent, default_modules + parent]
+        )
         if file is None:
             # Action doesn't exist
             return None
@@ -42,8 +45,16 @@ def load_action(target, search_path):
 def actions_from_dir(dir, preexisting=[]):
     '''
     Walks through the directory dir looking for Python files; returns
-    an array filled with tuples in the format (dir_path, parent_dir, action)
+    an array filled with tuples in the format (parent_dir, action)
     
     If a preexisting array is passed in, actions are not duplicated
     '''
-    pass
+    if not os.path.exists(dir):
+        return preexisting
+    for root, dirs, filenames in os.walk(dir):
+        parent_dir = os.path.basename(os.path.dirname(root))
+        for file in filenames:
+            if file[-3:] == '.py':
+                action = file[:-3]
+                if (parent_dir, action) not in preexisting:
+                    preexisting.append((parent_dir, action))
