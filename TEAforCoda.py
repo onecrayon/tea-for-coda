@@ -37,7 +37,8 @@ class TEAforCoda(NSObject):
         '''Required method; returns the name of the plugin'''
         return 'TEA for Coda'
     
-    def act(self, target):
+    # Needs trailing underscore for Obj-C to use @selector() on it
+    def act_(self, target):
         '''Runs the selected action's act() method'''
         target_module = load_action(target)
         if target_module is None:
@@ -51,6 +52,19 @@ class TEAforCoda(NSObject):
         Searches through standard folders for actions and populates the
         menus with them using default or predefined shortcuts
         '''
-        user, default = default_locations()
+        user_modules, default_modules = default_locations()
         # Walk through the directories and setup the menu items here
-        
+        actions = actions_from_dir(user_modules)
+        actions = actions_from_dir(default_modules, actions)
+        for path, submenu, action in actions:
+            title = action.replace('_', ' ').title()
+            self.controller.registerActionWithTitle_underSubmenuWithTitle_target_selector_representedObject_keyEquivalent_pluginName_(
+                title,
+                submenu,
+                self,
+                'act:',
+                [path, action],
+                # TODO: fill in shortcut based on preferences
+                '',
+                title
+            )

@@ -17,26 +17,19 @@ def default_locations():
     )
     return user_modules, default_modules
 
-def load_action(target):
+def load_action(target, search_path):
     '''
     Imports target TEA action file and returns it as a module
     (TEA modules are likely not, by default, in the system path)
     
-    Searches user override directory first, and then the default
-    TEA scripts directory in the Sugar bundle
-    
     Usage: wrap_selection_in_tag = load_action('wrap_selection_in_tag')
     '''
-    user_modules, default_modules = default_locations()
     try:
         # Is the action already loaded?
         module = sys.modules[target]
     except (KeyError, ImportError):
-        # Find the action (searches user overrides first)
-        file, pathname, description = imp.find_module(
-            target,
-            [user_modules, default_modules]
-        )
+        # Find the action (easiest way to set up the vars we need)
+        file, pathname, description = imp.find_module(target, search_path)
         if file is None:
             # Action doesn't exist
             return None
@@ -45,3 +38,12 @@ def load_action(target):
             target, file, pathname, description
         )
     return module
+
+def actions_from_dir(dir, preexisting=[]):
+    '''
+    Walks through the directory dir looking for Python files; returns
+    an array filled with tuples in the format (dir_path, parent_dir, action)
+    
+    If a preexisting array is passed in, actions are not duplicated
+    '''
+    pass
