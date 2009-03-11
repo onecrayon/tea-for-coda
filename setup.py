@@ -16,16 +16,15 @@ def include_files(path):
     '''
     files = []
     for root, dirs, filenames in os.walk(path):
-        if filenames:
-            for file in filenames:
-                # Don't include hidden files
-                if (file[0] != '.'):
-                    files.append(os.path.join(root, file))
+        for file in filenames:
+            # Don't include hidden files
+            if (file[0] != '.'):
+                files.append(os.path.join(root, file))
     return files
 
 # Configure this by hand for any included directories
 includes = [
-#     ('../../TEA', include_files('./TEA')),
+    ('../../TEA', include_files('./TEA')),
     ('./', include_files('./Resources')),
 ]
 

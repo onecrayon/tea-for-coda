@@ -52,9 +52,11 @@ def actions_from_dir(dir, preexisting=[]):
     if not os.path.exists(dir):
         return preexisting
     for root, dirs, filenames in os.walk(dir):
-        parent_dir = os.path.basename(os.path.dirname(root))
+        parent_dir = os.path.basename(os.path.dirname(root)) \
+                     if root is not dir else None
         for file in filenames:
             if file[-3:] == '.py':
                 action = file[:-3]
                 if (parent_dir, action) not in preexisting:
                     preexisting.append((parent_dir, action))
+    return preexisting

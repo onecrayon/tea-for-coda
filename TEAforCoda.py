@@ -11,8 +11,9 @@ import objc
 from tea_utils import *
 
 NSObject = objc.lookUpClass('NSObject')
+CodaPlugIn = objc.protocolNamed('CodaPlugIn')
 
-class TEAforCoda(NSObject):
+class TEAforCoda(NSObject, CodaPlugIn):
     '''
     Initializes the menu items and is responsible for directing
     actions to the appropriate Python script
@@ -26,7 +27,7 @@ class TEAforCoda(NSObject):
         # Set object's internal variables
         self.controller = inController
         # Setup the menu items
-        this.setup_actions();
+        self.setup_actions()
         
         # Add the Resources folder to the path
         sys.path.append(thisBundle.bundlePath() + '/Contents/Resources/')
