@@ -38,8 +38,13 @@ class TEAforCoda(NSObject):
         return 'TEA for Coda'
     
     def act(self, target):
-        '''Runs the selected action'''
-        pass
+        '''Runs the selected action's act() method'''
+        target_module = load_action(target)
+        if target_module is None:
+            # Couldn't find the module, log the error
+            NSLog('TEA: Could not find the module ' + target)
+            return False
+        target_module.act(self.controller)
     
     def setup_actions(self):
         '''
@@ -48,3 +53,4 @@ class TEAforCoda(NSObject):
         '''
         user, default = default_locations()
         # Walk through the directories and setup the menu items here
+        
