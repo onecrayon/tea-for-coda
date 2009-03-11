@@ -39,9 +39,10 @@ class TEAforCoda(NSObject, CodaPlugIn):
         return 'TEA for Coda'
     
     # Needs trailing underscore for Obj-C to use @selector() on it
-    def act_(self, target):
+    def act_(self, sender):
         '''Runs the selected action's act() method'''
-        target_module = load_action(target)
+        target = sender.representedObject()
+        target_module = load_action(target[0], target[1])
         if target_module is None:
             # Couldn't find the module, log the error
             NSLog('TEA: Could not find the module ' + target)
