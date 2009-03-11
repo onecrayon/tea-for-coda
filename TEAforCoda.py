@@ -26,7 +26,7 @@ class TEAforCoda(NSObject):
         # Set object's internal variables
         self.controller = inController
         # Setup the menu items
-        setup_actions(self.controller)
+        this.setup_actions();
         
         # Add the Resources folder to the path
         sys.path.append(thisBundle.bundlePath() + '/Contents/Resources/')
