@@ -26,7 +26,7 @@ def include_files(path):
 # Configure this by hand for any included directories
 includes = [
 #     ('../../TEA', include_files('./TEA')),
-#     ('./', include_files('./Resources')),
+     ('./', include_files('./Resources')),
 ]
 
 setup(
