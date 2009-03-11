@@ -8,25 +8,28 @@ import py2app
 import os
 
 
-def include_files(path):
-    '''
-    Walks a given folder and returns a list of its contents
-    
-    List includes the folder's name (so that we can use it with data_files)
-    '''
-    files = []
-    for root, dirs, filenames in os.walk(path):
-        for file in filenames:
-            # Don't include hidden files
-            if (file[0] != '.'):
-                files.append(os.path.join(root, file))
-    return files
+# Sets what directory to crawl for files to include
+# Relative to location of setup.py; leave off trailing slash
+includes_dir = 'includes'
 
-# Configure this by hand for any included directories
-includes = [
-    ('../../TEA', include_files('./TEA')),
-    ('./', include_files('./Resources')),
-]
+# Set the root directory for included files
+# Relative to the bundle's Resources folder:
+#     bundle.extension/Contents/Resources/
+includes_target = '../../'
+
+includes = []
+
+# Walk the includes directory and include all the files
+for root, dirs, filenames in os.walk(includes_dir):
+    if root is includes_dir:
+        final = includes_target
+    else:
+        final = includes_target + root[len(includes_dir)+1:] + '/'
+    files = []
+    for file in filenames:
+        if (file[0] != '.'):
+            files.append(os.path.join(root, file))
+    includes.append((final, files))
 
 setup(
     name='TEA for Coda',
