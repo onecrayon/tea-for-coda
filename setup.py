@@ -7,6 +7,7 @@ from distutils.core import setup
 import py2app
 import os
 
+# === CONFIG ===
 
 # Sets what directory to crawl for files to include
 # Relative to location of setup.py; leave off trailing slash
@@ -17,6 +18,9 @@ includes_dir = 'includes'
 #     bundle.extension/Contents/Resources/
 includes_target = '../../'
 
+# === END CONFIG ===
+
+# Initialize an empty list so we can use list.append()
 includes = []
 
 # Walk the includes directory and include all the files
@@ -31,6 +35,7 @@ for root, dirs, filenames in os.walk(includes_dir):
             files.append(os.path.join(root, file))
     includes.append((final, files))
 
+# Here's the guts of the setup call
 setup(
     name='TEA for Coda',
     plugin = ['TEAforCoda.py'],
