@@ -11,7 +11,7 @@ import os
 
 # Sets what directory to crawl for files to include
 # Relative to location of setup.py; leave off trailing slash
-includes_dir = 'includes'
+includes_dir = 'src'
 
 # Set the root directory for included files
 # Relative to the bundle's Resources folder:
