@@ -9,6 +9,14 @@ import os
 
 # === CONFIG ===
 
+# Update this info by hand; defines the required Info.plist elements
+info = dict(
+    CFBundleVersion = '1.0b1',
+    CFBundleIdentifier = 'com.onecrayon.tea.coda',
+    NSHumanReadableCopyright = '(c) 2009 Ian Beck under the MIT license',
+    CodaPlugInMinimumAPIVersion = '4',
+)
+
 # Sets what directory to crawl for files to include
 # Relative to location of setup.py; leave off trailing slash
 includes_dir = 'src'

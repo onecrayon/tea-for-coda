@@ -1,14 +1,36 @@
 '''
-Textmate Emulation Actions for Coda
+Text Editor Actions for Coda
 
 A collection of Python scripts that enable useful actions
 from Textmate into Coda
+
+Copyright (c) 2009 Ian Beck
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
 '''
 
 from Foundation import *
 import objc
 
 from tea_utils import *
+
+import TEAWrapSelectionInTag
 
 NSObject = objc.lookUpClass('NSObject')
 CodaPlugIn = objc.protocolNamed('CodaPlugIn')
@@ -19,54 +41,30 @@ class TEAforCoda(NSObject, CodaPlugIn):
     actions to the appropriate Python script
     '''
     
-    def initWithPlugInController_bundle_(self, inController, thisBundle):
+    def initWithPlugInController_bundle_(self, controller, bundle):
         '''Required method; run when the plugin is loaded'''
         self = super(TEAforCoda, self).init()
         if self is None: return None
         
         # Set object's internal variables
-        self.controller = inController
-        # Setup the menu items
-        self.setup_actions()
+        self.controller = controller
         
-        # Add the Resources folder to the path
-        sys.path.append(thisBundle.bundlePath() + '/Contents/Resources/')
+        # Setup actions here; not sure yet how to do this now that they are
+        # classes themselves (necessary for interface)
+        # Here's the code I was originally planning to use:
+#         self.controller.registerActionWithTitle_underSubmenuWithTitle_target_selector_representedObject_keyEquivalent_pluginName_(
+#                 title,
+#                 submenu,
+#                 self,
+#                 'act:',
+#                 [submenu, action],
+#                 # TODO: fill in shortcut based on preferences
+#                 '',
+#                 title
+#             )
         
         return self
     
     def name(self):
         '''Required method; returns the name of the plugin'''
         return 'TEA for Coda'
-    
-    # Needs trailing underscore for Obj-C to use @selector() on it
-    def act_(self, sender):
-        '''Runs the selected action's act() method'''
-        target = sender.representedObject()
-        target_module = load_action(target[0], target[1])
-        if target_module is None:
-            # Couldn't find the module, log the error
-            NSLog('TEA: Could not find the module ' + target)
-            return False
-        target_module.act(self.controller)
-    
-    def setup_actions(self):
-        '''
-        Searches through standard folders for actions and populates the
-        menus with them using default or predefined shortcuts
-        '''
-        user_modules, default_modules = default_locations()
-        # Walk through the directories and setup the menu items here
-        actions = actions_from_dir(user_modules)
-        actions = actions_from_dir(default_modules, actions)
-        for submenu, action in actions:
-            title = action.replace('_', ' ').title()
-            self.controller.registerActionWithTitle_underSubmenuWithTitle_target_selector_representedObject_keyEquivalent_pluginName_(
-                title,
-                submenu,
-                self,
-                'act:',
-                [submenu, action],
-                # TODO: fill in shortcut based on preferences
-                '',
-                title
-            )
