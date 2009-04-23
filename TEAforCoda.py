@@ -49,6 +49,8 @@ class TEAforCoda(NSObject, CodaPlugIn):
         ))
         actions = defaults.arrayForKey_('TEATextActions')
         
+        self.controller = controller
+        
         # Loop over the actions and add them to the menus
         for action in actions:
             if 'class' not in action or 'title' not in action:
@@ -57,17 +59,15 @@ class TEAforCoda(NSObject, CodaPlugIn):
             # Required items
             title = action['title']
             classname = action['class']
-            mod = __import__(classname)
-            target = mod.__dict__[classname]
             # Set up defaults
             submenu = action['submenu'] if 'submenu' in action else None
             shortcut = action['shortcut'] if 'shortcut' in action else ''
             controller.registerActionWithTitle_underSubmenuWithTitle_target_selector_representedObject_keyEquivalent_pluginName_(
                 title,
                 submenu,
-                target,
+                self,
                 'act:',
-                controller,
+                classname,
                 shortcut,
                 'TEA for Coda'
             )
@@ -77,3 +77,12 @@ class TEAforCoda(NSObject, CodaPlugIn):
     def name(self):
         '''Required method; returns the name of the plugin'''
         return 'TEA for Coda'
+    
+    def act_(self, sender):
+        '''
+        Imports the module, initializes the class, and runs its act() method
+        '''
+        classname = sender.representedObject()
+        mod = __import__(classname)
+        target = mod.__dict__[classname].alloc().init()
+        target.act(self.controller)

@@ -3,6 +3,6 @@
 from Foundation import *
 
 class TEAWrapSelectionInTag(NSObject):
-    def act_(self, sender):
+    def act(self, controller):
         NSLog('Hello world!')
         pass
