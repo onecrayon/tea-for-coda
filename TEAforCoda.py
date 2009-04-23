@@ -28,17 +28,13 @@ THE SOFTWARE.
 from Foundation import *
 import objc
 
-from tea_utils import *
-
-import TEAWrapSelectionInTag
-
 NSObject = objc.lookUpClass('NSObject')
 CodaPlugIn = objc.protocolNamed('CodaPlugIn')
 
 class TEAforCoda(NSObject, CodaPlugIn):
     '''
     Initializes the menu items and is responsible for directing
-    actions to the appropriate Python script
+    actions to the appropriate class
     '''
     
     def initWithPlugInController_bundle_(self, controller, bundle):
@@ -46,22 +42,34 @@ class TEAforCoda(NSObject, CodaPlugIn):
         self = super(TEAforCoda, self).init()
         if self is None: return None
         
-        # Set object's internal variables
-        self.controller = controller
+        defaults = NSUserDefaults.standardUserDefaults()
+        # Set up default action set
+        defaults.registerDefaults_(NSDictionary.dictionaryWithContentsOfFile_(
+            bundle.pathForResource_ofType_('TextActions', 'plist')
+        ))
+        actions = defaults.arrayForKey_('TEATextActions')
         
-        # Setup actions here; not sure yet how to do this now that they are
-        # classes themselves (necessary for interface)
-        # Here's the code I was originally planning to use:
-#         self.controller.registerActionWithTitle_underSubmenuWithTitle_target_selector_representedObject_keyEquivalent_pluginName_(
-#                 title,
-#                 submenu,
-#                 self,
-#                 'act:',
-#                 [submenu, action],
-#                 # TODO: fill in shortcut based on preferences
-#                 '',
-#                 title
-#             )
+        # Loop over the actions and add them to the menus
+        for action in actions:
+            if 'class' not in action or 'title' not in action:
+                NSLog('TEA: module missing either `class` or `title` entries')
+                continue
+            # Required items
+            title = action['title']
+            mod = __import__(action['class'])
+            target = mod.__dict__(title)
+            # Set up defaults
+            submenu = action['submenu'] if 'submenu' in action else None
+            shortcut = action['shortcut'] if 'shortcut' in action else ''
+            self.controller.registerActionWithTitle_underSubmenuWithTitle_target_selector_representedObject_keyEquivalent_pluginName_(
+                title,
+                submenu,
+                target,
+                'act:',
+                controller,
+                shortcut,
+                title
+            )
         
         return self
     
