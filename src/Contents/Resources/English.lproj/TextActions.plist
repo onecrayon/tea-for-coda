@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>TEATextActions</key>
+	<array>
+		<dict>
+			<key>class</key>
+			<string>TEAWrapSelectionInTag</string>
+			<key>shortcut</key>
+			<string>^$W</string>
+			<key>submenu</key>
+			<string>HTML</string>
+			<key>title</key>
+			<string>Wrap Selection In Tag</string>
+		</dict>
+	</array>
+</dict>
+</plist>
