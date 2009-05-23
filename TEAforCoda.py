@@ -50,6 +50,7 @@ class TEAforCoda(NSObject, CodaPlugIn):
         actions = defaults.arrayForKey_('TEATextActions')
         
         self.controller = controller
+        self.bundle = bundle
         
         # Loop over the actions and add them to the menus
         for action in actions:
@@ -85,4 +86,4 @@ class TEAforCoda(NSObject, CodaPlugIn):
         classname = sender.representedObject()
         mod = __import__(classname)
         target = mod.__dict__[classname].alloc().init()
-        target.act(self.controller)
+        target.act(self.controller, self.bundle)
