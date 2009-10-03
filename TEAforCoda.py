@@ -66,12 +66,20 @@ class TEAforCoda(NSObject, CodaPlugIn):
             # Set up defaults
             submenu = action['submenu'] if 'submenu' in action else None
             shortcut = action['shortcut'] if 'shortcut' in action else ''
+            options = action['options'] if 'options' in action else NSDictionary.dictionary()
+            
+            rep = NSDictionary.dictionaryWithObjectsAndKeys_(
+                classname,
+                'classname',
+                options,
+                'options'
+            )
             controller.registerActionWithTitle_underSubmenuWithTitle_target_selector_representedObject_keyEquivalent_pluginName_(
                 title,
                 submenu,
                 self,
                 'act:',
-                classname,
+                rep,
                 shortcut,
                 'TEA for Coda'
             )
@@ -90,10 +98,10 @@ class TEAforCoda(NSObject, CodaPlugIn):
         '''
         Imports the module, initializes the class, and runs its act() method
         '''
-        classname = sender.representedObject()
+        classname = sender.representedObject().objectForKey_('classname')
         mod = __import__(classname)
         if classname in mod.__dict__:
             target = mod.__dict__[classname].alloc().init()
         else:
             target = mod
-        target.act(self.controller, self.bundle)
+        target.act(self.controller, self.bundle, sender.representedObject().objectForKey_('options'))

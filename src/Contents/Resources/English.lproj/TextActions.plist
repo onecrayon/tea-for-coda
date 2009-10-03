@@ -12,10 +12,82 @@
 				<key>format</key>
 				<string>html</string>
 				<key>prefix</key>
+				<string>strong</string>
+				<key>query_user</key>
+				<false/>
+				<key>suffix</key>
+				<string>/strong</string>
+				<key>wrap_lines</key>
+				<false/>
+			</dict>
+			<key>shortcut</key>
+			<string>^b</string>
+			<key>submenu</key>
+			<string>Formatting</string>
+			<key>title</key>
+			<string>Strong</string>
+		</dict>
+		<dict>
+			<key>class</key>
+			<string>TEAWrapText</string>
+			<key>options</key>
+			<dict>
+				<key>format</key>
+				<string>html</string>
+				<key>prefix</key>
+				<string>em</string>
+				<key>query_user</key>
+				<false/>
+				<key>suffix</key>
+				<string>/em</string>
+				<key>wrap_lines</key>
+				<false/>
+			</dict>
+			<key>shortcut</key>
+			<string>^i</string>
+			<key>submenu</key>
+			<string>Formatting</string>
+			<key>title</key>
+			<string>Emphasize</string>
+		</dict>
+		<dict>
+			<key>class</key>
+			<string>TEAWrapText</string>
+			<key>options</key>
+			<dict>
+				<key>format</key>
+				<string>text</string>
+				<key>prefix</key>
+				<string></string>
+				<key>query_user</key>
+				<false/>
+				<key>suffix</key>
+				<string>&lt;br /&gt;</string>
+				<key>wrap_lines</key>
+				<false/>
+			</dict>
+			<key>shortcut</key>
+			<string>^
+</string>
+			<key>submenu</key>
+			<string>Formatting</string>
+			<key>title</key>
+			<string>Insert Linebreak</string>
+		</dict>
+		<dict>
+			<key>class</key>
+			<string>TEAWrapText</string>
+			<key>options</key>
+			<dict>
+				<key>format</key>
+				<string>html</string>
+				<key>prefix</key>
 				<string>p</string>
+				<key>query_user</key>
+				<true/>
 				<key>suffix</key>
 				<string>/p</string>
-				<key>wrap-lines</key>
+				<key>wrap_lines</key>
 				<false/>
 			</dict>
 			<key>shortcut</key>
@@ -24,6 +96,29 @@
 			<string>HTML</string>
 			<key>title</key>
 			<string>Wrap Selection In Tag</string>
+		</dict>
+		<dict>
+			<key>class</key>
+			<string>TEAWrapText</string>
+			<key>options</key>
+			<dict>
+				<key>format</key>
+				<string>html</string>
+				<key>prefix</key>
+				<string>li</string>
+				<key>query_user</key>
+				<true/>
+				<key>suffix</key>
+				<string>/li</string>
+				<key>wrap_lines</key>
+				<true/>
+			</dict>
+			<key>shortcut</key>
+			<string>@$^W</string>
+			<key>submenu</key>
+			<string>HTML</string>
+			<key>title</key>
+			<string>Wrap Selected Lines In Tag</string>
 		</dict>
 	</array>
 </dict>

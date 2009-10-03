@@ -8,10 +8,13 @@ import objc
 class TEASheetLoader(NSObject):
     customSheet = objc.IBOutlet()
     
-    def actInController_forBundle_withNib_(self, controller, bundle, nibName):
+    def initController_forBundle_(self, controller, bundle):
         # Store the controller and textview for later reference
         self.controller = controller
         self.textview = controller.focusedTextView_(self)
+    
+    def loadNib_forController_inBundle_(self, nibName, controller, bundle):
+        self.initController_forBundle_(controller, bundle)
         # Load the sheet
         if not self.customSheet:
             # We have to load from the bundle because this class isn't
