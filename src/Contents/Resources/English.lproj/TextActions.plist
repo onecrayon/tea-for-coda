@@ -120,6 +120,23 @@
 			<key>title</key>
 			<string>Wrap Selected Lines In Tag</string>
 		</dict>
+		<dict>
+			<key>class</key>
+			<string>TEAWrapInLink</string>
+			<key>options</key>
+			<dict>
+				<key>fallback</key>
+				<string>http://</string>
+				<key>snippet</key>
+				<string>&lt;a href="$URL"&gt;$SELECTED_TEXT&lt;/a&gt;</string>
+			</dict>
+			<key>shortcut</key>
+			<string>^$L</string>
+			<key>submenu</key>
+			<string>HTML</string>
+			<key>title</key>
+			<string>Wrap Selection In Link</string>
+		</dict>
 	</array>
 </dict>
 </plist>
