@@ -7,6 +7,7 @@ from AppKit import *
 from PyObjCTools import AppHelper
 import objc
 
+import tea_actions as tea
 import TEASheetLoader
 
 class TEAWrapText(TEASheetLoader.TEASheetLoader):
@@ -15,15 +16,11 @@ class TEAWrapText(TEASheetLoader.TEASheetLoader):
     
     def act(self, controller, bundle, options):
         # Set up our options
-        prefix = options.objectForKey_('prefix')
-        suffix = options.objectForKey_('suffix')
-        self.query_user = options.objectForKey_('query_user')
-        if self.query_user is None:
-            self.query_user = True
-        self.wrap_lines = options.objectForKey_('wrap_lines')
-        if self.wrap_lines is None:
-            self.wrap_lines = False
-        self.format = options.objectForKey_('format')
+        prefix = tea.get_option(options, 'prefix')
+        suffix = tea.get_option(options, 'suffix')
+        self.query_user = tea.get_option(options, 'query_user', True)
+        self.wrap_lines = tea.get_option(options, 'wrap_lines', False)
+        self.format = tea.get_option(options, 'format')
         
         if self.query_user:
             if self.format.lower() == 'html':
@@ -51,41 +48,22 @@ class TEAWrapText(TEASheetLoader.TEASheetLoader):
         # Helper function to do zen-style conversions for tag
         global increment
         increment = 1
-        def string_to_tag(string):
-            '''
-            Parses a string into a tag with id and class attributes
-            
-            For example, div#stuff.good.things translates into
-            `div id="stuff" class="good things"`
-            '''
-            if string.find('#') > 0 or string.find('.') > 0:
-                match = re.search(r'#([a-zA-Z0-9$_-]+)', string)
-                if match:
-                    id = match.group(1)
-                else:
-                    id = False
-                matches = re.findall(r'\.([a-zA-Z0-9$_-]+)', string)
-                classes = ''
-                for match in matches:
-                    if classes:
-                        classes += ' '
-                    classes += match
-                tag = re.sub(r'^([a-zA-Z_:-]+).*$', r'\1', string)
-                if id:
-                    tag += ' id="' + id + '"'
-                if classes:
-                    tag += ' class="' + classes + '"'
-                if tag.find('$') != -1:
-                    tag = tag.replace('$', str(increment))
-                    globals()['increment'] += 1
-                return tag
+        def convert_to_tag(string):
+            space = string.find(' ')
+            if space != -1:
+                suffix = string[space:]
             else:
-                return string
+                suffix = ''
+            string = tea.string_to_tag(string)
+            if string.find('$') != -1:
+                string = string.replace('$', str(increment))
+                globals()['increment'] += 1
+            return string + suffix
         
         # Helper function to do actual wrapping
         def wrap(text, prefix, suffix):
             if self.format.lower() == 'html':
-                prefix = string_to_tag(prefix)
+                prefix = convert_to_tag(prefix)
                 prefix = '<' + prefix + '>'
                 suffix = '<' + suffix + '>'
                 if self.prefix_length is None:
@@ -156,4 +134,7 @@ class TEAWrapText(TEASheetLoader.TEASheetLoader):
     
     def controlTextDidChange_(self, notification):
         if self.format.lower() == 'html':
-            self.suffix.setStringValue_(re.sub(r'^([a-zA-Z:-]+).*$', r'/\1', self.prefix.stringValue()))
+            closetag = re.sub(r'^([a-zA-Z:-]+).*$', r'/\1', self.prefix.stringValue())
+            if closetag == self.prefix.stringValue():
+                closetag = ''
+            self.suffix.setStringValue_(closetag)

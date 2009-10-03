@@ -10,6 +10,30 @@
 			<key>options</key>
 			<dict>
 				<key>format</key>
+				<string>text</string>
+				<key>prefix</key>
+				<string></string>
+				<key>query_user</key>
+				<false/>
+				<key>suffix</key>
+				<string>&lt;br /&gt;</string>
+				<key>wrap_lines</key>
+				<false/>
+			</dict>
+			<key>shortcut</key>
+			<string>^
+</string>
+			<key>submenu</key>
+			<string>Formatting</string>
+			<key>title</key>
+			<string>Insert Linebreak</string>
+		</dict>
+		<dict>
+			<key>class</key>
+			<string>TEAWrapText</string>
+			<key>options</key>
+			<dict>
+				<key>format</key>
 				<string>html</string>
 				<key>prefix</key>
 				<string>strong</string>
@@ -52,27 +76,26 @@
 		</dict>
 		<dict>
 			<key>class</key>
-			<string>TEAWrapText</string>
+			<string>TEASnippetWithWord</string>
 			<key>options</key>
 			<dict>
-				<key>format</key>
-				<string>text</string>
-				<key>prefix</key>
-				<string></string>
-				<key>query_user</key>
-				<false/>
-				<key>suffix</key>
-				<string>&lt;br /&gt;</string>
-				<key>wrap_lines</key>
-				<false/>
+				<key>alpha_numeric</key>
+				<true/>
+				<key>bidirectional</key>
+				<true/>
+				<key>extra_characters</key>
+				<string>_-#.&gt;+*:$!@</string>
+				<key>mode</key>
+				<string>zen</string>
+				<key>snippet</key>
+				<string>&lt;$SELECTED_TEXT&gt;$0&lt;/$WORD&gt;</string>
 			</dict>
 			<key>shortcut</key>
-			<string>^
-</string>
+			<string>^,</string>
 			<key>submenu</key>
-			<string>Formatting</string>
+			<string>HTML</string>
 			<key>title</key>
-			<string>Insert Linebreak</string>
+			<string>Expand Abbreviation</string>
 		</dict>
 		<dict>
 			<key>class</key>

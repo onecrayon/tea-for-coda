@@ -5,18 +5,15 @@ import subprocess
 from Foundation import *
 
 from persistent_re import *
+import tea_actions as tea
 
 def act(controller, bundle, options):
     # Grab the textview
     textview = controller.focusedTextView_(None)
     
     # Setup the options
-    fallback = options.objectForKey_('fallback')
-    if fallback is None:
-        fallback = ''
-    snippet = options.objectForKey_('snippet')
-    if snippet is None:
-        snippet = '$URL'
+    fallback = tea.get_option(options, 'fallback', '')
+    snippet = tea.get_option(options, 'snippet', '$URL')
     
     # Get the clipboard contents, parse for a URL
     process = subprocess.Popen(['pbpaste'], stdout=subprocess.PIPE)
@@ -25,8 +22,7 @@ def act(controller, bundle, options):
     url = format_hyperlink(clipboard, fallback)
     
     # Grab the selected text and range
-    text = textview.selectedText()
-    range = textview.selectedRange()
+    text, range = tea.selection_and_range(textview)
     
     # Parse the snippet for $SELECTED_TEXT placeholder
     sel_loc = snippet.find('$SELECTED_TEXT')
@@ -53,12 +49,9 @@ def act(controller, bundle, options):
         url_len = 0
     else:
         url_len = len(url)
-    newrange = NSMakeRange(url_loc + range.location, url_len)
+    newrange = tea.new_range(url_loc + range.location, url_len)
     
-    textview.beginUndoGrouping()
-    textview.replaceCharactersInRange_withString_(range, replacement)
-    textview.setSelectedRange_(newrange)
-    textview.endUndoGrouping()
+    tea.insert_text_and_select(textview, replacement, range, newrange)
 
 def format_hyperlink(text, fallback=''):
     gre = persistent_re()
@@ -71,17 +64,13 @@ def format_hyperlink(text, fallback=''):
         return 'http://' + gre.last.group(1) + '/dp/' + gre.last.group(2)
     elif gre.match(r'[a-zA-Z][a-zA-Z0-9.+-]+?://.*$', text):
         # Unknown prefix
-        return encode_ampersands(text)
+        return tea.tea.encode_ampersands(text)
     elif gre.match(r'.*\.(com|uk|net|org|info)(/.*)?$', text):
         # Recognizable URL without http:// prefix
-        return 'http://' + encode_ampersands(text)
+        return 'http://' + tea.encode_ampersands(text)
     elif gre.match(r'\S+$', text):
         # No space characters, so could be a URL; toss 'er in there
-        return encode_ampersands(text)
+        return tea.encode_ampersands(text)
     else:
         # Nothing that remotely looks URL-ish; give them the fallback
         return fallback
-
-def encode_ampersands(text, enc='&amp;'):
-    '''Encodes ampersands'''
-    return re.sub('&(?!([a-zA-Z0-9]+|#[0-9]+|#x[0-9a-fA-F]+);)', enc, text)
