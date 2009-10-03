@@ -7,20 +7,32 @@ implemented as a [Coda][1] plugin. I originally began work on TEA because
 I was interested in Coda's all-in-one workflow but completely uninterested
 in abandoning Textmate's excellent HTML editing capabilities.
 
-One of the benefits of the TEA for Coda plugin versus the original
-Applescripts is that you can easily extend the plugin with arbitrary actions
-of your own. All you need to know is a little bit of Python.
+For more information, including documentation and downloads, please see
+the TEA for Coda site:
+
+**<http://onecrayon.com/tea/coda/>**
+
+**Found something about TEA that makes you unhappy?** [Submit a bug report
+or feature request][2] (requires free GitHub account) or [drop me a line][3].
 
    [1]: http://panic.com/coda/
+   [2]: http://github.com/onecrayon/tea-for-coda/issues
+   [3]: http://onecrayon.com/about/contact/
 
-Extending TEA for Coda
-======================
+Building from source
+====================
 
-TEA for Coda is coded in [Python][3] and can be easily extended with
-your own custom actions.  If you are instead interested in coding your own
-plugin in Python, the TEA for Coda project can serve as an excellent
-starting point.  For more information about extending or building on TEA
-for Coda, please see the [wiki][4].
+If you want to try the latest development version of Coda, you can download
+and build the plugin from source like so:
 
-   [3]: http://python.org/
-   [4]: http://wiki.github.com/onecrayon/tea-for-coda/
+	git clone git://github.com/onecrayon/tea-for-coda.git
+	cd tea-for-coda
+	python setup.py py2app
+
+If you wish to create a development version, you can run this instead:
+
+	python setup.py py2app -A
+
+This will create a normal version of the TEA plugin, but symlink all the
+internal files so that you don't have to rebuild the plugin to try out
+changes (you'll still need to relaunch Coda between changes, though).

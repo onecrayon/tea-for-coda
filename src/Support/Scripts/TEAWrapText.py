@@ -12,7 +12,6 @@ import TEASheetLoader
 class TEAWrapText(TEASheetLoader.TEASheetLoader):
     prefix = objc.IBOutlet()
     suffix = objc.IBOutlet()
-    closetag = objc.IBOutlet()
     
     def act(self, controller, bundle, options):
         # Set up our options
