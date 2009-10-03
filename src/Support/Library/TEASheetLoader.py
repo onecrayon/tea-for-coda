@@ -1,19 +1,14 @@
-'''Wraps the currently selected text in a tag of the user's choice'''
+'''Generic class for TEA sheets'''
 
 from Foundation import *
 from AppKit import *
 from PyObjCTools import AppHelper
 import objc
 
-class TEAWrapSelectionInTag(NSObject):
+class TEASheetLoader(NSObject):
     customSheet = objc.IBOutlet()
     
-    prefix = objc.IBOutlet()
-    suffix = objc.IBOutlet()
-    default = objc.IBOutlet()
-    closetag = objc.IBOutlet()
-    
-    def act(self, controller, bundle):
+    def actInController_forBundle_withNib_(self, controller, bundle, nibName):
         # Store the controller and textview for later reference
         self.controller = controller
         self.textview = controller.focusedTextView_(self)
@@ -22,19 +17,20 @@ class TEAWrapSelectionInTag(NSObject):
             # We have to load from the bundle because this class isn't
             # recognized as belonging to the TEAforCoda bundle
             bundle.loadNibFile_externalNameTable_withZone_(
-                'TEAMirroredTagEntry',
+                nibName,
                 NSDictionary.dictionaryWithObject_forKey_(self, NSNibOwner),
                 None
             )
-            # NSBundle.loadNibNamed_owner_('TEAMirroredTagEntry', self)
         
         NSApp.beginSheet_modalForWindow_modalDelegate_didEndSelector_contextInfo_(
             self.customSheet,
             self.textview.window(),
             self,
-            'didEndSheet:returnCode:contextInfo:',
+            'sheetDidEnd:returnCode:contextInfo:',
             None
         )
+        # Retain the class to make sure it sticks around for the window events
+        self.retain()
     
     @objc.IBAction
     def doSubmitSheet_(self, sender):
@@ -44,6 +40,8 @@ class TEAWrapSelectionInTag(NSObject):
     def cancel_(self, sender):
         NSApp.endSheet_returnCode_(self.customSheet, 0)
     
-    @AppHelper.endSheetMethod
-    def didEndSheet_returnCode_contextInfo_(self, sheet, code, info):
-        sheet.orderOut_(self)
+    def windowWillClose_(self, notification):
+        '''Delegate method to auto-release everything'''
+        # Unless we retain then self-release, we'll lose the window to the
+        # default garbage collector; this delegate method is automatic
+        self.autorelease()

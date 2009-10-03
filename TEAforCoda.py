@@ -25,6 +25,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 '''
 
+import sys
+import os.path
+
 from Foundation import *
 import objc
 
@@ -72,6 +75,10 @@ class TEAforCoda(NSObject, CodaPlugIn):
                 shortcut,
                 'TEA for Coda'
             )
+        
+        # Add the Support/Scripts folder to the Python import path
+        sys.path.append(os.path.join(bundle.bundlePath(), "Support/Scripts"))
+        sys.path.append(os.path.join(bundle.bundlePath(), "Support/Library"))
         
         return self
     
