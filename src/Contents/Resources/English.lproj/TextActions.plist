@@ -6,7 +6,18 @@
 	<array>
 		<dict>
 			<key>class</key>
-			<string>TEAWrapSelectionInTag</string>
+			<string>TEAWrapText</string>
+			<key>options</key>
+			<dict>
+				<key>format</key>
+				<string>html</string>
+				<key>prefix</key>
+				<string>p</string>
+				<key>suffix</key>
+				<string>/p</string>
+				<key>wrap-lines</key>
+				<false/>
+			</dict>
 			<key>shortcut</key>
 			<string>^$W</string>
 			<key>submenu</key>

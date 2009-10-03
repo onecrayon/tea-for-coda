@@ -92,5 +92,8 @@ class TEAforCoda(NSObject, CodaPlugIn):
         '''
         classname = sender.representedObject()
         mod = __import__(classname)
-        target = mod.__dict__[classname].alloc().init()
+        if classname in mod.__dict__:
+            target = mod.__dict__[classname].alloc().init()
+        else:
+            target = mod
         target.act(self.controller, self.bundle)
