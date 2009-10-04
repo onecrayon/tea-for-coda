@@ -6,7 +6,7 @@
 	<dict>
 		<key>Emphasize</key>
 		<dict>
-			<key>class</key>
+			<key>action</key>
 			<string>TEAWrapText</string>
 			<key>options</key>
 			<dict>
@@ -28,7 +28,7 @@
 		</dict>
 		<key>Expand Abbreviation</key>
 		<dict>
-			<key>class</key>
+			<key>action</key>
 			<string>TEASnippetWithWord</string>
 			<key>options</key>
 			<dict>
@@ -45,12 +45,10 @@
 			</dict>
 			<key>shortcut</key>
 			<string>^,</string>
-			<key>submenu</key>
-			<string>HTML</string>
 		</dict>
 		<key>Indent New Line</key>
 		<dict>
-			<key>class</key>
+			<key>action</key>
 			<string>TEAInsertSnippet</string>
 			<key>options</key>
 			<dict>
@@ -64,12 +62,10 @@
 			<key>shortcut</key>
 			<string>^$
 </string>
-			<key>submenu</key>
-			<string>Formatting</string>
 		</dict>
 		<key>Insert Linebreak</key>
 		<dict>
-			<key>class</key>
+			<key>action</key>
 			<string>TEAWrapText</string>
 			<key>options</key>
 			<dict>
@@ -87,12 +83,10 @@
 			<key>shortcut</key>
 			<string>^
 </string>
-			<key>submenu</key>
-			<string>Formatting</string>
 		</dict>
 		<key>Strong</key>
 		<dict>
-			<key>class</key>
+			<key>action</key>
 			<string>TEAWrapText</string>
 			<key>options</key>
 			<dict>
@@ -112,9 +106,27 @@
 			<key>submenu</key>
 			<string>Formatting</string>
 		</dict>
+		<key>Trim Line(s)</key>
+		<dict>
+			<key>action</key>
+			<string>TEATrim</string>
+			<key>options</key>
+			<dict>
+				<key>alternate</key>
+				<string>line</string>
+				<key>input</key>
+				<string>selected_lines</string>
+				<key>respect_indent</key>
+				<true/>
+				<key>trim</key>
+				<string>both</string>
+			</dict>
+			<key>shortcut</key>
+			<string></string>
+		</dict>
 		<key>Wrap Selected Lines In Tag</key>
 		<dict>
-			<key>class</key>
+			<key>action</key>
 			<string>TEAWrapText</string>
 			<key>options</key>
 			<dict>
@@ -131,12 +143,10 @@
 			</dict>
 			<key>shortcut</key>
 			<string>@$^W</string>
-			<key>submenu</key>
-			<string>HTML</string>
 		</dict>
 		<key>Wrap Selection In Link</key>
 		<dict>
-			<key>class</key>
+			<key>action</key>
 			<string>TEAWrapInLink</string>
 			<key>options</key>
 			<dict>
@@ -147,12 +157,10 @@
 			</dict>
 			<key>shortcut</key>
 			<string>^$L</string>
-			<key>submenu</key>
-			<string>HTML</string>
 		</dict>
 		<key>Wrap Selection In Tag</key>
 		<dict>
-			<key>class</key>
+			<key>action</key>
 			<string>TEAWrapText</string>
 			<key>options</key>
 			<dict>
@@ -169,8 +177,6 @@
 			</dict>
 			<key>shortcut</key>
 			<string>^$W</string>
-			<key>submenu</key>
-			<string>HTML</string>
 		</dict>
 	</dict>
 </dict>

@@ -8,8 +8,8 @@ from persistent_re import *
 import tea_actions as tea
 
 def act(controller, bundle, options):
-    # Grab the textview
-    textview = controller.focusedTextView_(None)
+    # Grab the context
+    context = tea.get_context(controller)
     
     # Setup the options
     fallback = tea.get_option(options, 'fallback', '')
@@ -22,7 +22,7 @@ def act(controller, bundle, options):
     url = format_hyperlink(clipboard, fallback)
     
     # Grab the selected text and range
-    text, range = tea.selection_and_range(textview)
+    text, range = tea.selection_and_range(context)
     
     # Parse the snippet for $SELECTED_TEXT placeholder
     sel_loc = snippet.find('$SELECTED_TEXT')
@@ -51,7 +51,7 @@ def act(controller, bundle, options):
         url_len = len(url)
     newrange = tea.new_range(url_loc + range.location, url_len)
     
-    tea.insert_text_and_select(textview, replacement, range, newrange)
+    tea.insert_text_and_select(context, replacement, range, newrange)
 
 def format_hyperlink(text, fallback=''):
     gre = persistent_re()

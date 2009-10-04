@@ -3,14 +3,14 @@
 import tea_actions as tea
 
 def act(controller, bundle, options):
-    textview = controller.focusedTextView_(None)
+    context = tea.get_context(controller)
     
     snippet = tea.get_option(options, 'snippet', '')
     maintain_selection = tea.get_option(options, 'maintain_selection', False)
     
-    text, range = tea.selection_and_range(textview)
+    text, range = tea.selection_and_range(context)
     
-    snippet = tea.indent_snippet(textview, snippet, range)
+    snippet = tea.indent_snippet(context, snippet, range)
     
     # Set up target selection
     sel_loc = snippet.find('$SELECTED_TEXT')
@@ -25,6 +25,6 @@ def act(controller, bundle, options):
     snippet = snippet.replace('$SELECTED_TEXT', text)
     snippet = snippet.replace('$0', '')
     if select_range is not None:
-        tea.insert_text_and_select(textview, snippet, range, select_range)
+        tea.insert_text_and_select(context, snippet, range, select_range)
     else:
-        tea.insert_text(textview, snippet, range)
+        tea.insert_text(context, snippet, range)

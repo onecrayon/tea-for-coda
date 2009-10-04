@@ -60,20 +60,23 @@ class TEAforCoda(NSObject, CodaPlugIn):
         self.bundle = bundle
         
         # Loop over the actions and add them to the menus
-        for title, action in actions.iteritems():
-            if 'class' not in action:
-                NSLog('TEA: module missing either `class` or `title` entries')
+        keys = actions.keys()
+        keys.sort()
+        for title in keys:
+            action = actions[title]
+            if 'action' not in action:
+                NSLog('TEA: module missing `action` entry')
                 continue
             # Required items
-            classname = action['class']
+            actionname = action['action']
             # Set up defaults
             submenu = action['submenu'] if 'submenu' in action else None
             shortcut = action['shortcut'] if 'shortcut' in action else ''
             options = action['options'] if 'options' in action else NSDictionary.dictionary()
             
             rep = NSDictionary.dictionaryWithObjectsAndKeys_(
-                classname,
-                'classname',
+                actionname,
+                'actionname',
                 options,
                 'options'
             )
@@ -101,10 +104,10 @@ class TEAforCoda(NSObject, CodaPlugIn):
         '''
         Imports the module, initializes the class, and runs its act() method
         '''
-        classname = sender.representedObject().objectForKey_('classname')
-        mod = __import__(classname)
-        if classname in mod.__dict__:
-            target = mod.__dict__[classname].alloc().init()
+        actionname = sender.representedObject().objectForKey_('actionname')
+        mod = __import__(actionname)
+        if actionname in mod.__dict__:
+            target = mod.__dict__[actionname].alloc().init()
         else:
             target = mod
         target.act(self.controller, self.bundle, sender.representedObject().objectForKey_('options'))

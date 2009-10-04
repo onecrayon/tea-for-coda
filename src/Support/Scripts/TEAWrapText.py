@@ -81,10 +81,10 @@ class TEAWrapText(TEASheetLoader.TEASheetLoader):
             suffix = self.suffix
         
         # Grab the selection and selected range
-        selection = self.textview.selectedText()
+        selection = self.context.selectedText()
         if selection == None:
             selection = ''
-        range = self.textview.selectedRange()
+        range = self.context.selectedRange()
         
         # Set up the lines array based on whether or not we're wrapping lines
         if self.wrap_lines:
@@ -112,13 +112,13 @@ class TEAWrapText(TEASheetLoader.TEASheetLoader):
                 replacement += wrap(line, prefix, suffix)
         
         # Insert the new text
-        self.textview.beginUndoGrouping()
-        self.textview.replaceCharactersInRange_withString_(range, replacement)
+        self.context.beginUndoGrouping()
+        self.context.replaceCharactersInRange_withString_(range, replacement)
         if selection == '' and prefix != '' and suffix != '':
             # No selection, so position cursor inside
             newrange = NSMakeRange(range.location + self.prefix_length, 0)
-            self.textview.setSelectedRange_(newrange)
-        self.textview.endUndoGrouping()
+            self.context.setSelectedRange_(newrange)
+        self.context.endUndoGrouping()
     
     @AppHelper.endSheetMethod
     def sheetDidEnd_returnCode_contextInfo_(self, sheet, code, info):

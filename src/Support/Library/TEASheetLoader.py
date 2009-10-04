@@ -9,9 +9,9 @@ class TEASheetLoader(NSObject):
     customSheet = objc.IBOutlet()
     
     def initController_forBundle_(self, controller, bundle):
-        # Store the controller and textview for later reference
+        # Store the controller and context for later reference
         self.controller = controller
-        self.textview = controller.focusedTextView_(self)
+        self.context = tea.get_context(controller, self)
     
     def loadNib_forController_inBundle_(self, nibName, controller, bundle):
         self.initController_forBundle_(controller, bundle)
@@ -27,7 +27,7 @@ class TEASheetLoader(NSObject):
         
         NSApp.beginSheet_modalForWindow_modalDelegate_didEndSelector_contextInfo_(
             self.customSheet,
-            self.textview.window(),
+            self.context.window(),
             self,
             'sheetDidEnd:returnCode:contextInfo:',
             None

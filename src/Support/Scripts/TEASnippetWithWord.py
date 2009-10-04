@@ -7,7 +7,7 @@ from zencoding import zen_core
 from zencoding.settings import zen_settings
 
 def act(controller, bundle, options):
-    textview = controller.focusedTextView_(None)
+    context = tea.get_context(controller)
     
     # Get the options
     alpha_numeric = tea.get_option(options, 'alpha_numeric', True)
@@ -17,8 +17,8 @@ def act(controller, bundle, options):
     mode = tea.get_option(options, 'mode', '')
     
     # Fetch the word
-    range = textview.selectedRange()
-    word, new_range = tea.get_word_or_selection(textview, range, alpha_numeric,
+    range = context.selectedRange()
+    word, new_range = tea.get_word_or_selection(context, range, alpha_numeric,
                                                 extra_characters, bidirectional)
     if word == '':
         # No word, so nothing further to do
@@ -35,10 +35,10 @@ def act(controller, bundle, options):
     # Process that sucker!
     if mode == 'zen' and fullword.find(' ') < 0:
         # Set up the config variables
-        zen_core.newline = tea.get_line_ending(textview)
+        zen_core.newline = tea.get_line_ending(context)
         zen_core.insertion_point = '$0'
         zen_core.sub_insertion_point = ''
-        zen_settings['indentation'] = tea.get_indentation_string(textview)
+        zen_settings['indentation'] = tea.get_indentation_string(context)
         
         # NEED A WAY TO DETECT DOCUMENT TYPE
         doc_type = 'html'
@@ -53,7 +53,7 @@ def act(controller, bundle, options):
         else:
             snippet += ' />$0'
     # Indent the snippet
-    snippet = tea.indent_snippet(textview, snippet, new_range)
+    snippet = tea.indent_snippet(context, snippet, new_range)
     # Special replacement in case we're using $WORD
     snippet = snippet.replace('$WORD', word)
     snippet = snippet.replace('$SELECTED_TEXT', fullword)
@@ -61,6 +61,6 @@ def act(controller, bundle, options):
     if cursor_loc != -1:
         select_range = tea.new_range(cursor_loc + new_range.location, 0)
         snippet = snippet.replace('$0', '')
-        tea.insert_text_and_select(textview, snippet, new_range, select_range)
+        tea.insert_text_and_select(context, snippet, new_range, select_range)
     else:
-        tea.insert_text(textview, snippet, new_range)
+        tea.insert_text(context, snippet, new_range)

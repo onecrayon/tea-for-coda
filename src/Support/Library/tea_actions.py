@@ -47,6 +47,9 @@ def get_option(options, option, default=None):
         option = default
     return option
 
+def get_context(controller, sender=None):
+    return controller.focusedTextView_(sender)
+
 # ===============================================================
 # Preference lookup shortcuts
 # ===============================================================
@@ -166,7 +169,7 @@ def trim(context, text, lines=True, sides='both', respect_indent=False,
     def trimit(text, sides, indent, preserve_linebreaks):
         '''Utility function for trimming the text'''
         # Preserve the indent if an indent string is passed in
-        if (sides == 'both' or sides == 'start') and indent != '':
+        if (sides.lower() == 'both' or sides.lower() == 'start') and indent != '':
             match = re.match('(' + indent + ')+', text)
             if match:
                 indent_chars = match.group(0)
@@ -181,9 +184,9 @@ def trim(context, text, lines=True, sides='both', respect_indent=False,
         else:
             linebreak = ''
         # Strip that whitespace!
-        if sides == 'start':
+        if sides.lower() == 'start':
             text = text.lstrip()
-        elif sides == 'end':
+        elif sides.lower() == 'end':
             text = text.rstrip()
         else:
             text = text.strip()
@@ -237,6 +240,12 @@ def get_selection(context, range):
 def set_selected_range(context, range):
     '''Sets the selection to the single range passed as an argument'''
     context.setSelectedRange_(range)
+
+def get_line(context):
+    return context.currentLine(), context.rangeOfCurrentLine()
+
+def get_range(context):
+    return context.selectedRange()
 
 def selection_and_range(context, with_errors=False):
     '''
