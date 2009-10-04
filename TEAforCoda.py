@@ -50,18 +50,21 @@ class TEAforCoda(NSObject, CodaPlugIn):
         defaults.registerDefaults_(NSDictionary.dictionaryWithContentsOfFile_(
             bundle.pathForResource_ofType_('TextActions', 'plist')
         ))
-        actions = defaults.arrayForKey_('TEATextActions')
+        ns_actions = defaults.dictionaryForKey_('TEATextActions')
+        actions = dict(
+            [str(arg), value] \
+            for arg, value in ns_actions.iteritems()
+        )
         
         self.controller = controller
         self.bundle = bundle
         
         # Loop over the actions and add them to the menus
-        for action in actions:
-            if 'class' not in action or 'title' not in action:
+        for title, action in actions.iteritems():
+            if 'class' not in action:
                 NSLog('TEA: module missing either `class` or `title` entries')
                 continue
             # Required items
-            title = action['title']
             classname = action['class']
             # Set up defaults
             submenu = action['submenu'] if 'submenu' in action else None

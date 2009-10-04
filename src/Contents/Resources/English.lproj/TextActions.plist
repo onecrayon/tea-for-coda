@@ -3,7 +3,71 @@
 <plist version="1.0">
 <dict>
 	<key>TEATextActions</key>
-	<array>
+	<dict>
+		<key>Emphasize</key>
+		<dict>
+			<key>class</key>
+			<string>TEAWrapText</string>
+			<key>options</key>
+			<dict>
+				<key>format</key>
+				<string>html</string>
+				<key>prefix</key>
+				<string>em</string>
+				<key>query_user</key>
+				<false/>
+				<key>suffix</key>
+				<string>/em</string>
+				<key>wrap_lines</key>
+				<false/>
+			</dict>
+			<key>shortcut</key>
+			<string>^i</string>
+			<key>submenu</key>
+			<string>Formatting</string>
+		</dict>
+		<key>Expand Abbreviation</key>
+		<dict>
+			<key>class</key>
+			<string>TEASnippetWithWord</string>
+			<key>options</key>
+			<dict>
+				<key>alpha_numeric</key>
+				<true/>
+				<key>bidirectional</key>
+				<true/>
+				<key>extra_characters</key>
+				<string>_-#.&gt;+*:$!@</string>
+				<key>mode</key>
+				<string>zen</string>
+				<key>snippet</key>
+				<string>&lt;$SELECTED_TEXT&gt;$0&lt;/$WORD&gt;</string>
+			</dict>
+			<key>shortcut</key>
+			<string>^,</string>
+			<key>submenu</key>
+			<string>HTML</string>
+		</dict>
+		<key>Indent New Line</key>
+		<dict>
+			<key>class</key>
+			<string>TEAInsertSnippet</string>
+			<key>options</key>
+			<dict>
+				<key>maintain_selection</key>
+				<true/>
+				<key>snippet</key>
+				<string>
+	$SELECTED_TEXT
+</string>
+			</dict>
+			<key>shortcut</key>
+			<string>^$
+</string>
+			<key>submenu</key>
+			<string>Formatting</string>
+		</dict>
+		<key>Insert Linebreak</key>
 		<dict>
 			<key>class</key>
 			<string>TEAWrapText</string>
@@ -25,9 +89,8 @@
 </string>
 			<key>submenu</key>
 			<string>Formatting</string>
-			<key>title</key>
-			<string>Insert Linebreak</string>
 		</dict>
+		<key>Strong</key>
 		<dict>
 			<key>class</key>
 			<string>TEAWrapText</string>
@@ -48,78 +111,8 @@
 			<string>^b</string>
 			<key>submenu</key>
 			<string>Formatting</string>
-			<key>title</key>
-			<string>Strong</string>
 		</dict>
-		<dict>
-			<key>class</key>
-			<string>TEAWrapText</string>
-			<key>options</key>
-			<dict>
-				<key>format</key>
-				<string>html</string>
-				<key>prefix</key>
-				<string>em</string>
-				<key>query_user</key>
-				<false/>
-				<key>suffix</key>
-				<string>/em</string>
-				<key>wrap_lines</key>
-				<false/>
-			</dict>
-			<key>shortcut</key>
-			<string>^i</string>
-			<key>submenu</key>
-			<string>Formatting</string>
-			<key>title</key>
-			<string>Emphasize</string>
-		</dict>
-		<dict>
-			<key>class</key>
-			<string>TEASnippetWithWord</string>
-			<key>options</key>
-			<dict>
-				<key>alpha_numeric</key>
-				<true/>
-				<key>bidirectional</key>
-				<true/>
-				<key>extra_characters</key>
-				<string>_-#.&gt;+*:$!@</string>
-				<key>mode</key>
-				<string>zen</string>
-				<key>snippet</key>
-				<string>&lt;$SELECTED_TEXT&gt;$0&lt;/$WORD&gt;</string>
-			</dict>
-			<key>shortcut</key>
-			<string>^,</string>
-			<key>submenu</key>
-			<string>HTML</string>
-			<key>title</key>
-			<string>Expand Abbreviation</string>
-		</dict>
-		<dict>
-			<key>class</key>
-			<string>TEAWrapText</string>
-			<key>options</key>
-			<dict>
-				<key>format</key>
-				<string>html</string>
-				<key>prefix</key>
-				<string>p</string>
-				<key>query_user</key>
-				<true/>
-				<key>suffix</key>
-				<string>/p</string>
-				<key>wrap_lines</key>
-				<false/>
-			</dict>
-			<key>shortcut</key>
-			<string>^$W</string>
-			<key>submenu</key>
-			<string>HTML</string>
-			<key>title</key>
-			<string>Wrap Selection In Tag</string>
-		</dict>
+		<key>Wrap Selected Lines In Tag</key>
 		<dict>
 			<key>class</key>
 			<string>TEAWrapText</string>
@@ -140,9 +133,8 @@
 			<string>@$^W</string>
 			<key>submenu</key>
 			<string>HTML</string>
-			<key>title</key>
-			<string>Wrap Selected Lines In Tag</string>
 		</dict>
+		<key>Wrap Selection In Link</key>
 		<dict>
 			<key>class</key>
 			<string>TEAWrapInLink</string>
@@ -157,9 +149,29 @@
 			<string>^$L</string>
 			<key>submenu</key>
 			<string>HTML</string>
-			<key>title</key>
-			<string>Wrap Selection In Link</string>
 		</dict>
-	</array>
+		<key>Wrap Selection In Tag</key>
+		<dict>
+			<key>class</key>
+			<string>TEAWrapText</string>
+			<key>options</key>
+			<dict>
+				<key>format</key>
+				<string>html</string>
+				<key>prefix</key>
+				<string>p</string>
+				<key>query_user</key>
+				<true/>
+				<key>suffix</key>
+				<string>/p</string>
+				<key>wrap_lines</key>
+				<false/>
+			</dict>
+			<key>shortcut</key>
+			<string>^$W</string>
+			<key>submenu</key>
+			<string>HTML</string>
+		</dict>
+	</dict>
 </dict>
 </plist>
