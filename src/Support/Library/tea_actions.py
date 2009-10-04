@@ -252,7 +252,7 @@ def selection_and_range(context, with_errors=False):
                 context, "Error: selection required",
                 "You must select some text in order to use this action."
             )
-        return None, range
+        return '', range
     return get_selection(context, range), range
 
 def get_character(context, range):
