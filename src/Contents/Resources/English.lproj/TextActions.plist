@@ -84,6 +84,26 @@
 			<string>^
 </string>
 		</dict>
+		<key>Line</key>
+		<dict>
+			<key>action</key>
+			<string>TEAGoto</string>
+			<key>options</key>
+			<dict>
+				<key>discard_indent</key>
+				<false/>
+				<key>regex</key>
+				<false/>
+				<key>source</key>
+				<string>line</string>
+				<key>trim</key>
+				<false/>
+			</dict>
+			<key>shortcut</key>
+			<string>^l</string>
+			<key>submenu</key>
+			<string>Select</string>
+		</dict>
 		<key>Line Contents</key>
 		<dict>
 			<key>action</key>
@@ -100,7 +120,7 @@
 				<true/>
 			</dict>
 			<key>shortcut</key>
-			<string>^l</string>
+			<string>^~l</string>
 			<key>submenu</key>
 			<string>Select</string>
 		</dict>
