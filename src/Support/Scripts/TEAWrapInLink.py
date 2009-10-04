@@ -64,7 +64,7 @@ def format_hyperlink(text, fallback=''):
         return 'http://' + gre.last.group(1) + '/dp/' + gre.last.group(2)
     elif gre.match(r'[a-zA-Z][a-zA-Z0-9.+-]+?://.*$', text):
         # Unknown prefix
-        return tea.tea.encode_ampersands(text)
+        return tea.encode_ampersands(text)
     elif gre.match(r'.*\.(com|uk|net|org|info)(/.*)?$', text):
         # Recognizable URL without http:// prefix
         return 'http://' + tea.encode_ampersands(text)

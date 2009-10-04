@@ -5,6 +5,8 @@ from AppKit import *
 from PyObjCTools import AppHelper
 import objc
 
+import tea_actions as tea
+
 class TEASheetLoader(NSObject):
     customSheet = objc.IBOutlet()
     
