@@ -134,7 +134,7 @@ class TEAWrapText(TEASheetLoader.TEASheetLoader):
     
     def controlTextDidChange_(self, notification):
         if self.format.lower() == 'html':
-            closetag = re.sub(r'^([a-zA-Z:-]+).*$', r'/\1', self.prefix.stringValue())
+            closetag = re.sub(r'^([a-zA-Z0-9:-]+).*$', r'/\1', self.prefix.stringValue())
             if closetag == self.prefix.stringValue():
                 closetag = ''
             self.suffix.setStringValue_(closetag)
