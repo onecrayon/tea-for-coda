@@ -155,7 +155,7 @@ def entities_to_hex(text, wrap):
     return re.sub(r'&(#x?)?([0-9]+|[0-9a-fA-F]+);', wrap_hex, text)
 
 def trim(context, text, lines=True, sides='both', respect_indent=False,
-         preserve_linebreaks=True):
+         preserve_linebreaks=True, discard_empty=False):
     '''
     Trims whitespace from the text
     
@@ -165,9 +165,17 @@ def trim(context, text, lines=True, sides='both', respect_indent=False,
     
     If respect_indent=True, indent characters at the start of lines will be
     left alone (specific character determined by preferences)
+    
+    If discard_empty=True, whitespace on empty lines will be discarded
+    regardless of indentation status
     '''
-    def trimit(text, sides, indent, preserve_linebreaks):
+    def trimit(text, sides, indent, preserve_linebreaks, discard_empty):
         '''Utility function for trimming the text'''
+        # If we're discarding empties, check for empty line
+        if discard_empty:
+            match = re.match(r'\s*?([\n\r]+)$', text)
+            if match:
+                return match.group(1)
         # Preserve the indent if an indent string is passed in
         if (sides.lower() == 'both' or sides.lower() == 'start') and indent != '':
             match = re.match('(' + indent + ')+', text)
@@ -200,9 +208,9 @@ def trim(context, text, lines=True, sides='both', respect_indent=False,
     finaltext = ''
     if lines:
         for line in text.splitlines(True):
-            finaltext += trimit(line, sides, indent, preserve_linebreaks)
+            finaltext += trimit(line, sides, indent, preserve_linebreaks, discard_empty)
     else:
-        finaltext = trimit(text, sides, indent, preserve_linebreaks)
+        finaltext = trimit(text, sides, indent, preserve_linebreaks, discard_empty)
     return finaltext
 
 def unix_line_endings(text):

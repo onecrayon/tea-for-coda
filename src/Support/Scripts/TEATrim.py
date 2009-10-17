@@ -32,6 +32,7 @@ def act(controller, bundle, options):
     alternate = tea.get_option(options, 'alternate')
     trim = tea.get_option(options, 'trim', 'both')
     respect_indent = tea.get_option(options, 'respect_indent', False)
+    discard_empty = tea.get_option(options, 'discard_empty', False)
     
     # Since input is always a selection of some kind, check if we have one
     range = tea.get_range(context)
@@ -39,18 +40,18 @@ def act(controller, bundle, options):
     if (range.length == 0) or input is None:
         if alternate.lower() == 'line':
             text, range = tea.get_line(context)
-            text = tea.trim(context, text, False, trim, respect_indent)
+            text = tea.trim(context, text, False, trim, respect_indent, True, discard_empty)
         elif alternate.lower() == 'all_lines':
             range = tea.new_range(0, context.string().length())
             text = tea.get_selection(context, range)
-            text = tea.trim(context, text, True, trim, respect_indent)
+            text = tea.trim(context, text, True, trim, respect_indent, True, discard_empty)
     else:
         if input.lower() == 'selected_lines':
             parse_lines = True
         else:
             parse_lines = False
         text = tea.get_selection(context, range)
-        text = tea.trim(context, text, parse_lines, trim, respect_indent)
+        text = tea.trim(context, text, parse_lines, trim, respect_indent, True, discard_empty)
     tea.insert_text(context, text, range)
     new_range = tea.new_range(range.location, len(text))
     tea.set_selected_range(context, new_range)
