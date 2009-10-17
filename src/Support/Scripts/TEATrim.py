@@ -35,6 +35,7 @@ def act(controller, bundle, options):
     
     # Since input is always a selection of some kind, check if we have one
     range = tea.get_range(context)
+    
     if (range.length == 0) or input is None:
         if alternate.lower() == 'line':
             text, range = tea.get_line(context)
@@ -51,3 +52,5 @@ def act(controller, bundle, options):
         text = tea.get_selection(context, range)
         text = tea.trim(context, text, parse_lines, trim, respect_indent)
     tea.insert_text(context, text, range)
+    new_range = tea.new_range(range.location, len(text))
+    tea.set_selected_range(context, new_range)
