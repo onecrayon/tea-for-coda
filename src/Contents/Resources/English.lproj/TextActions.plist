@@ -161,7 +161,7 @@
 				<key>trim</key>
 				<string>both</string>
 				<key>discard_empty</key>
-				<true/>
+				<false/>
 			</dict>
 			<key>shortcut</key>
 			<string></string>
