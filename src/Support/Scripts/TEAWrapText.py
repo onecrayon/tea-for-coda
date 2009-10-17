@@ -52,9 +52,11 @@ class TEAWrapText(TEASheetLoader.TEASheetLoader):
             space = string.find(' ')
             if space != -1:
                 suffix = string[space:]
+                prefix = string[:space]
             else:
                 suffix = ''
-            string = tea.string_to_tag(string)
+                prefix = string
+            string = tea.string_to_tag(prefix)
             if string.find('$') != -1:
                 string = string.replace('$', str(increment))
                 globals()['increment'] += 1
