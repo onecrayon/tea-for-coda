@@ -4,6 +4,31 @@
 <dict>
 	<key>TEATextActions</key>
 	<dict>
+		<key>Balance</key>
+		<dict>
+			<key>action</key>
+			<string>TEABalance</string>
+			<key>options</key>
+			<dict>
+				<key>direction</key>
+				<string>out</string>
+			</dict>
+			<key>shortcut</key>
+			<string>^d</string>
+		</dict>
+		<key>Balance Inward</key>
+		<dict>
+			<key>action</key>
+			<string>TEABalance</string>
+			<key>options</key>
+			<dict>
+				<key>direction</key>
+				<string>in</string>
+			</dict>
+			<key>shortcut</key>
+			<string>^$D</string>
+		</dict>
+	
 		<key>Emphasize</key>
 		<dict>
 			<key>action</key>
