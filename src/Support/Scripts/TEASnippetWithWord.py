@@ -3,7 +3,7 @@
 from Foundation import *
 
 import tea_actions as tea
-from zencoding import zen_core
+from zencoding import zen_core, settings_loader
 from zencoding.settings import zen_settings
 
 def act(controller, bundle, options):
@@ -34,17 +34,30 @@ def act(controller, bundle, options):
     
     # Process that sucker!
     if mode == 'zen' and fullword.find(' ') < 0:
+        # Explicitly load zen settings
+        zen_settings = settings_loader.load_settings()
+        zen_core.update_settings(zen_settings)
+        
         # Set up the config variables
         zen_core.newline = tea.get_line_ending(context)
-        zen_core.insertion_point = '$0'
-        zen_core.sub_insertion_point = ''
-        zen_settings['indentation'] = tea.get_indentation_string(context)
+        zen_settings['variables']['indentation'] = tea.get_indentation_string(context)
+        
+        # This allows us to use smart incrementing tab stops in zen snippets
+        point_ix = [0]
+        def place_ins_point(text):
+            if not point_ix[0]:
+                point_ix[0] += 1
+                return '$0'
+            else:
+                return ''
+            
+        zen_core.insertion_point = place_ins_point
         
         # NEED A WAY TO DETECT DOCUMENT TYPE
         doc_type = 'html'
         
         # Prepare the snippet
-        snippet = zen_core.expand_abbr(fullword, doc_type)
+        snippet = zen_core.expand_abbreviation(fullword, doc_type, 'xhtml')
     elif mode == 'zen' and tea.is_selfclosing(word):
         # Self-closing, so construct the snippet from scratch
         snippet = '<' + fullword

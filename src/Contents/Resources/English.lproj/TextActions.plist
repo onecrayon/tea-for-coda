@@ -265,6 +265,13 @@
 			<key>shortcut</key>
 			<string>^$W</string>
 		</dict>
+		<key>Wrap With Abbreviation</key>
+		<dict>
+			<key>action</key>
+			<string>TEAWrapWithAbbreviation</string>
+			<key>shortcut</key>
+			<string>@$W</string>
+		</dict>
 	</dict>
 </dict>
 </plist>

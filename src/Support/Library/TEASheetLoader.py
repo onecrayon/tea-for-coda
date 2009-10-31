@@ -27,6 +27,9 @@ class TEASheetLoader(NSObject):
                 None
             )
         
+        tea.log(repr(self.customSheet))
+        tea.log(repr(self.context.window()))
+        
         NSApp.beginSheet_modalForWindow_modalDelegate_didEndSelector_contextInfo_(
             self.customSheet,
             self.context.window(),
@@ -34,6 +37,9 @@ class TEASheetLoader(NSObject):
             'sheetDidEnd:returnCode:contextInfo:',
             None
         )
+        
+        tea.log('loaded !!!')
+        
         # Retain the class to make sure it sticks around for the window events
         self.retain()
     
