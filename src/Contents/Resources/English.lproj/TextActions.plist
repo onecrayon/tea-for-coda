@@ -272,6 +272,14 @@
 			<key>shortcut</key>
 			<string>@$W</string>
 		</dict>
+		<key>Update &lt;img&gt; Size</key>
+		<dict>
+			<key>action</key>
+			<string>TEAUpdateImageSize</string>
+			<key>shortcut</key>
+			<string>@I</string>
+		</dict>
 	</dict>
+	
 </dict>
 </plist>
