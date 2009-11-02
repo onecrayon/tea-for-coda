@@ -55,14 +55,26 @@ class TEAWrapWithAbbreviation(TEASheetLoader.TEASheetLoader):
 		text, rng = tea.selection_and_range(context)
 		if not text:
 			# no selection, find matching tag
-			start, end = html_matcher.match(context.string(), rng.location)
+			content = context.string()
+			start, end = html_matcher.match(content, rng.location)
 			if start is None:
 				# nothing to wrap
 				return False
 			
-			last = html_matcher.last_match
-			start = last['opening_tag'].start
-			end = last['closing_tag'] and last['closing_tag'].end or last['opening_tag'].end
+			def is_space(char):
+				return char.isspace() or char in r'\n\r'
+			
+			# narrow down selection until first non-space character
+			while start < end:
+				if not is_space(content[start]):
+					break
+				start += 1
+			
+			while end > start:
+				end -= 1
+				if not is_space(content[end]):
+					end += 1
+					break
 			
 			rng = tea.new_range(start, end - start)
 			text = tea.get_selection(context, rng)
