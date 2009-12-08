@@ -4,7 +4,7 @@ from Foundation import *
 
 import tea_actions as tea
 from zencoding import zen_core, settings_loader
-from zencoding.settings import zen_settings
+from zencoding.zen_settings import zen_settings
 
 def act(controller, bundle, options):
     context = tea.get_context(controller)
@@ -22,7 +22,7 @@ def act(controller, bundle, options):
                                                 extra_characters, bidirectional)
     if word == '':
         # No word, so nothing further to do
-        return
+        return False
     # If we're using $WORD, make sure the word is just a word
     if snippet.find('$WORD') >= 0:
         fullword = word
