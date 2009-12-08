@@ -60,35 +60,32 @@ class TEAforCoda(NSObject, CodaPlugIn):
         self.bundle = bundle
         
         # Loop over the actions and add them to the menus
-        keys = actions.keys()
+        rootlevel = {}
+        submenus = {}
+        # Extract out our submenus and root items
+        for key, value in actions.iteritems():
+            if 'submenu' in value:
+                if not str(value['submenu']) in submenus:
+                    submenus[str(value['submenu'])] = {}
+                submenus[str(value['submenu'])][key] = value
+            else:
+                rootlevel[key] = value
+        # Process the submenus
+        submenu_keys = submenus.keys()
+        submenu_keys.sort()
+        for menu in submenu_keys:
+            menu_actions = submenus[menu]
+            temp_keys = menu_actions.keys()
+            temp_keys.sort()
+            for title in temp_keys:
+                action = menu_actions[title]
+                self.register_action(controller, action, title)
+        # Process the root level items
+        keys = rootlevel.keys()
         keys.sort()
         for title in keys:
-            action = actions[title]
-            if 'action' not in action:
-                NSLog('TEA: module missing `action` entry')
-                continue
-            # Required items
-            actionname = action['action']
-            # Set up defaults
-            submenu = action['submenu'] if 'submenu' in action else None
-            shortcut = action['shortcut'] if 'shortcut' in action else ''
-            options = action['options'] if 'options' in action else NSDictionary.dictionary()
-            
-            rep = NSDictionary.dictionaryWithObjectsAndKeys_(
-                actionname,
-                'actionname',
-                options,
-                'options'
-            )
-            controller.registerActionWithTitle_underSubmenuWithTitle_target_selector_representedObject_keyEquivalent_pluginName_(
-                title,
-                submenu,
-                self,
-                'act:',
-                rep,
-                shortcut,
-                'TEA for Coda'
-            )
+            action = rootlevel[title]
+            self.register_action(controller, action, title)
         
         # Add the Support/Scripts folder to the Python import path
         sys.path.append(os.path.join(bundle.bundlePath(), "Support/Scripts"))
@@ -111,3 +108,30 @@ class TEAforCoda(NSObject, CodaPlugIn):
         else:
             target = mod
         target.act(self.controller, self.bundle, sender.representedObject().objectForKey_('options'))
+    
+    def register_action(self, controller, action, title):
+        if 'action' not in action:
+            NSLog('TEA: module missing `action` entry')
+            return False
+        # Required items
+        actionname = action['action']
+        # Set up defaults
+        submenu = action['submenu'] if 'submenu' in action else None
+        shortcut = action['shortcut'] if 'shortcut' in action else ''
+        options = action['options'] if 'options' in action else NSDictionary.dictionary()
+        
+        rep = NSDictionary.dictionaryWithObjectsAndKeys_(
+            actionname,
+            'actionname',
+            options,
+            'options'
+        )
+        controller.registerActionWithTitle_underSubmenuWithTitle_target_selector_representedObject_keyEquivalent_pluginName_(
+            title,
+            submenu,
+            self,
+            'act:',
+            rep,
+            shortcut,
+            'TEA for Coda'
+        )

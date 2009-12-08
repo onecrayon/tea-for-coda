@@ -4,7 +4,7 @@
 <dict>
 	<key>TEATextActions</key>
 	<dict>
-		<key>Balance</key>
+		<key>Balanced Tag</key>
 		<dict>
 			<key>action</key>
 			<string>TEABalance</string>
@@ -14,9 +14,11 @@
 				<string>out</string>
 			</dict>
 			<key>shortcut</key>
-			<string>^d</string>
+			<string>^b</string>
+			<key>submenu</key>
+			<string>Select</string>
 		</dict>
-		<key>Balance Inward</key>
+		<key>Balanced Tag (Inward)</key>
 		<dict>
 			<key>action</key>
 			<string>TEABalance</string>
@@ -26,7 +28,9 @@
 				<string>in</string>
 			</dict>
 			<key>shortcut</key>
-			<string>^$D</string>
+			<string>^$B</string>
+			<key>submenu</key>
+			<string>Select</string>
 		</dict>
 	
 		<key>Emphasize</key>
@@ -47,9 +51,9 @@
 				<false/>
 			</dict>
 			<key>shortcut</key>
-			<string>^i</string>
+			<string>^~i</string>
 			<key>submenu</key>
-			<string>Formatting</string>
+			<string>HTML</string>
 		</dict>
 		<key>Expand Abbreviation</key>
 		<dict>
@@ -70,6 +74,8 @@
 			</dict>
 			<key>shortcut</key>
 			<string>^,</string>
+			<key>submenu</key>
+			<string>Zen</string>
 		</dict>
 		<key>Indent New Line</key>
 		<dict>
@@ -87,6 +93,8 @@
 			<key>shortcut</key>
 			<string>^$
 </string>
+			<key>submenu</key>
+			<string>General</string>
 		</dict>
 		<key>Insert Linebreak</key>
 		<dict>
@@ -108,6 +116,8 @@
 			<key>shortcut</key>
 			<string>^
 </string>
+			<key>submenu</key>
+			<string>HTML</string>
 		</dict>
 		<key>Line</key>
 		<dict>
@@ -167,9 +177,9 @@
 				<false/>
 			</dict>
 			<key>shortcut</key>
-			<string>^b</string>
+			<string>^~b</string>
 			<key>submenu</key>
-			<string>Formatting</string>
+			<string>HTML</string>
 		</dict>
 		<key>Trim Line(s)</key>
 		<dict>
@@ -190,6 +200,8 @@
 			</dict>
 			<key>shortcut</key>
 			<string></string>
+			<key>submenu</key>
+			<string>General</string>
 		</dict>
 		<key>Word</key>
 		<dict>
@@ -230,6 +242,8 @@
 			</dict>
 			<key>shortcut</key>
 			<string>@$^W</string>
+			<key>submenu</key>
+			<string>HTML</string>
 		</dict>
 		<key>Wrap Selection In Link</key>
 		<dict>
@@ -244,6 +258,8 @@
 			</dict>
 			<key>shortcut</key>
 			<string>^$L</string>
+			<key>submenu</key>
+			<string>HTML</string>
 		</dict>
 		<key>Wrap Selection In Tag</key>
 		<dict>
@@ -264,13 +280,17 @@
 			</dict>
 			<key>shortcut</key>
 			<string>^$W</string>
+			<key>submenu</key>
+			<string>HTML</string>
 		</dict>
 		<key>Wrap With Abbreviation</key>
 		<dict>
 			<key>action</key>
 			<string>TEAWrapWithAbbreviation</string>
 			<key>shortcut</key>
-			<string>@$W</string>
+			<string>^$A</string>
+			<key>submenu</key>
+			<string>Zen</string>
 		</dict>
 		<key>Update &lt;img&gt; Size</key>
 		<dict>
@@ -278,6 +298,8 @@
 			<string>TEAUpdateImageSize</string>
 			<key>shortcut</key>
 			<string>@I</string>
+			<key>submenu</key>
+			<string>HTML</string>
 		</dict>
 	</dict>
 	
