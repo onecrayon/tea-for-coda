@@ -11,6 +11,7 @@ def act(controller, bundle, options):
     text, range = tea.selection_and_range(context)
     
     snippet = tea.indent_snippet(context, snippet, range)
+    snippet = tea.clean_line_endings(context, snippet)
     
     # Set up target selection
     sel_loc = snippet.find('$SELECTED_TEXT')

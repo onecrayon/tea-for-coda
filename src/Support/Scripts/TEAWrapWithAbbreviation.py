@@ -90,6 +90,7 @@ class TEAWrapWithAbbreviation(TEASheetLoader.TEASheetLoader):
         result = unicode(result, 'utf-8')
         
         result = tea.indent_snippet(context, result, rng)
+        snippet = tea.clean_line_endings(context, snippet)
         
         cursor_loc = result.find('$0')
         if cursor_loc != -1:

@@ -67,6 +67,7 @@ def act(controller, bundle, options):
             snippet += ' />$0'
     # Indent the snippet
     snippet = tea.indent_snippet(context, snippet, new_range)
+    snippet = tea.clean_line_endings(context, snippet)
     # Special replacement in case we're using $WORD
     snippet = snippet.replace('$WORD', word)
     snippet = snippet.replace('$SELECTED_TEXT', fullword)
