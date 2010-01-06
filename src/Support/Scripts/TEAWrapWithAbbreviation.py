@@ -79,8 +79,8 @@ class TEAWrapWithAbbreviation(TEASheetLoader.TEASheetLoader):
             rng = tea.new_range(start, end - start)
             text = tea.get_selection(context, rng)
             
-        # NEED A WAY TO DETECT DOCUMENT TYPE
-        doc_type = 'html'
+        # Fetch the doctype based on file extension
+        doc_type = tea.get_zen_doctype(context)
         
         text = self.unindent(context, text)
         

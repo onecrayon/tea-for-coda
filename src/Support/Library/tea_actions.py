@@ -6,6 +6,7 @@ from types import StringTypes
 from Foundation import *
 
 import html_replace
+from zencoding import html_matcher as html_matcher
 
 # ===============================================================
 # Interact with the user and output information
@@ -406,6 +407,41 @@ def indent_snippet(context, snippet, range):
                     # Ends with a newline, add the indent
                     snippet += current_indent
     return snippet
+
+# ===============================================================
+# Check document syntax methods
+# ===============================================================
+
+def get_zen_doctype(context, default='html'):
+    '''
+    Tests the document to see if it is CSS or XSL; for use with zen
+    coding actions to determine type of snippets to use
+    '''
+    doc_type = default
+    css_exts = ['css', 'less']
+    xsl_exts = ['xsl', 'xslt']
+    path = context.path()
+    if path is not None:
+        pos = path.rfind('.')
+        if pos != -1:
+            pos += 1
+            ext = path[pos:]
+            if ext in css_exts:
+                doc_type = 'css'
+            elif ext in xsl_exts:
+                doc_type = 'xsl'
+    # No luck with the extension; check for inline style tags
+    if doc_type == 'html':
+        range = get_range(context)
+        cursor = range.location + range.length
+        content = context.string()
+        start, end = html_matcher.match(content, cursor)
+        tag = html_matcher.last_match['opening_tag']
+        if tag is not None:
+            tag = tag.name
+            if tag == 'style':
+                doc_type = 'css'
+    return doc_type
 
 # ===============================================================
 # Insertion methods

@@ -5,7 +5,6 @@ from Foundation import *
 import tea_actions as tea
 from zencoding import zen_core, settings_loader
 from zencoding.zen_settings import zen_settings
-from zencoding import html_matcher as html_matcher
 
 def act(controller, bundle, options):
     context = tea.get_context(controller)
@@ -55,30 +54,7 @@ def act(controller, bundle, options):
         zen_core.insertion_point = place_ins_point
         
         # Determine doctype as best we can based on file extension
-        doc_type = 'html'
-        css_exts = ['css', 'less']
-        xsl_exts = ['xsl', 'xslt']
-        path = context.path()
-        if path is not None:
-            pos = path.rfind('.')
-            if pos != -1:
-                pos += 1
-                ext = path[pos:]
-                if ext in css_exts:
-                    doc_type = 'css'
-                elif ext in xsl_exts:
-                    doc_type = 'xsl'
-        # No luck with the extension; check for inline style tags
-        if doc_type == 'html':
-            range = tea.get_range(context)
-            cursor = range.location + range.length
-            content = context.string()
-            start, end = html_matcher.match(content, cursor)
-            tag = html_matcher.last_match['opening_tag']
-            if tag is not None:
-                tag = tag.name
-                if tag == 'style':
-                    doc_type = 'css'
+        doc_type = tea.get_zen_doctype(context)
         
         # Prepare the snippet
         snippet = zen_core.expand_abbreviation(fullword, doc_type, 'xhtml')
