@@ -90,15 +90,15 @@ class TEAWrapWithAbbreviation(TEASheetLoader.TEASheetLoader):
         result = unicode(result, 'utf-8')
         
         result = tea.indent_snippet(context, result, rng)
-        snippet = tea.clean_line_endings(context, snippet)
+        result = tea.clean_line_endings(context, result)
         
         cursor_loc = result.find('$0')
         if cursor_loc != -1:
             select_range = tea.new_range(cursor_loc + rng.location, 0)
-            snippet = result.replace('$0', '')
-            tea.insert_text_and_select(context, snippet, rng, select_range)
+            result = result.replace('$0', '')
+            tea.insert_text_and_select(context, result, rng, select_range)
         else:
-            tea.insert_text(context, snippet, rng)
+            tea.insert_text(context, result, rng)
         
     
     def get_current_line_padding(self, context):
