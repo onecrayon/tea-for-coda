@@ -32,29 +32,6 @@
 			<key>submenu</key>
 			<string>Select</string>
 		</dict>
-	
-		<key>Emphasize</key>
-		<dict>
-			<key>action</key>
-			<string>TEAWrapText</string>
-			<key>options</key>
-			<dict>
-				<key>format</key>
-				<string>html</string>
-				<key>prefix</key>
-				<string>em</string>
-				<key>query_user</key>
-				<false/>
-				<key>suffix</key>
-				<string>/em</string>
-				<key>wrap_lines</key>
-				<false/>
-			</dict>
-			<key>shortcut</key>
-			<string>^~i</string>
-			<key>submenu</key>
-			<string>HTML</string>
-		</dict>
 		<key>Expand Abbreviation</key>
 		<dict>
 			<key>action</key>
@@ -76,6 +53,50 @@
 			<string>^,</string>
 			<key>submenu</key>
 			<string>Zen</string>
+		</dict>
+		<key>Format: Emphasize</key>
+		<dict>
+			<key>action</key>
+			<string>TEAWrapText</string>
+			<key>options</key>
+			<dict>
+				<key>format</key>
+				<string>html</string>
+				<key>prefix</key>
+				<string>em</string>
+				<key>query_user</key>
+				<false/>
+				<key>suffix</key>
+				<string>/em</string>
+				<key>wrap_lines</key>
+				<false/>
+			</dict>
+			<key>shortcut</key>
+			<string>^~i</string>
+			<key>submenu</key>
+			<string>HTML</string>
+		</dict>
+		<key>Format: Strong</key>
+		<dict>
+			<key>action</key>
+			<string>TEAWrapText</string>
+			<key>options</key>
+			<dict>
+				<key>format</key>
+				<string>html</string>
+				<key>prefix</key>
+				<string>strong</string>
+				<key>query_user</key>
+				<false/>
+				<key>suffix</key>
+				<string>/strong</string>
+				<key>wrap_lines</key>
+				<false/>
+			</dict>
+			<key>shortcut</key>
+			<string>^~b</string>
+			<key>submenu</key>
+			<string>HTML</string>
 		</dict>
 		<key>Indent New Line</key>
 		<dict>
@@ -159,28 +180,6 @@
 			<key>submenu</key>
 			<string>Select</string>
 		</dict>
-		<key>Strong</key>
-		<dict>
-			<key>action</key>
-			<string>TEAWrapText</string>
-			<key>options</key>
-			<dict>
-				<key>format</key>
-				<string>html</string>
-				<key>prefix</key>
-				<string>strong</string>
-				<key>query_user</key>
-				<false/>
-				<key>suffix</key>
-				<string>/strong</string>
-				<key>wrap_lines</key>
-				<false/>
-			</dict>
-			<key>shortcut</key>
-			<string>^~b</string>
-			<key>submenu</key>
-			<string>HTML</string>
-		</dict>
 		<key>Trim Line(s)</key>
 		<dict>
 			<key>action</key>
@@ -189,19 +188,28 @@
 			<dict>
 				<key>alternate</key>
 				<string>line</string>
+				<key>discard_empty</key>
+				<false/>
 				<key>input</key>
 				<string>selected_lines</string>
 				<key>respect_indent</key>
 				<true/>
 				<key>trim</key>
 				<string>both</string>
-				<key>discard_empty</key>
-				<false/>
 			</dict>
 			<key>shortcut</key>
 			<string></string>
 			<key>submenu</key>
 			<string>General</string>
+		</dict>
+		<key>Update &lt;img&gt; Size</key>
+		<dict>
+			<key>action</key>
+			<string>TEAUpdateImageSize</string>
+			<key>shortcut</key>
+			<string>@I</string>
+			<key>submenu</key>
+			<string>HTML</string>
 		</dict>
 		<key>Word</key>
 		<dict>
@@ -292,16 +300,6 @@
 			<key>submenu</key>
 			<string>Zen</string>
 		</dict>
-		<key>Update &lt;img&gt; Size</key>
-		<dict>
-			<key>action</key>
-			<string>TEAUpdateImageSize</string>
-			<key>shortcut</key>
-			<string>@I</string>
-			<key>submenu</key>
-			<string>HTML</string>
-		</dict>
 	</dict>
-	
 </dict>
 </plist>
